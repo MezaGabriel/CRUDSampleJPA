@@ -1,0 +1,9 @@
+version: "3.0"
+services:
+  example-db:
+    image: "mysql:latest"
+    environment:
+      MYSQL_ROOT_PASSWORD: "example"
+      MYSQL_DATABASE: "example"
+    ports:
+      - 3306:3306
