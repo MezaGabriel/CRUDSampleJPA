@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:23.10
 
 # Instala OpenJDK 17
 RUN apt-get update && apt-get install -y openjdk-17-jdk
