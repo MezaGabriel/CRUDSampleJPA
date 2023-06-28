@@ -1,22 +1,20 @@
-FROM wildfly:12.0.0.Final
+FROM ubuntu:latest
 
-# Define las variables de entorno para la versión de Java
-ENV JAVA_VERSION 17
-
-# Instala la versión de Java deseada
-RUN curl -O https://download.java.net/java/GA/jdk${JAVA_VERSION}/openjdk-${JAVA_VERSION}_linux-x64_bin.tar.gz \
-    && tar -xzf openjdk-${JAVA_VERSION}_linux-x64_bin.tar.gz -C /opt \
-    && rm openjdk-${JAVA_VERSION}_linux-x64_bin.tar.gz
+# Instala OpenJDK 17
+RUN apt-get update && apt-get install -y openjdk-17-jdk
 
 # Configura las variables de entorno para el JDK
-ENV JAVA_HOME /opt/jdk-${JAVA_VERSION}
-ENV PATH $JAVA_HOME/bin:$PATH
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+ENV PATH=$PATH:$JAVA_HOME/bin
 
-# Copia tu aplicación al directorio de despliegue de WildFly
-COPY my-restservice.war /opt/jboss/wildfly/standalone/deployments/
+# Copia tu aplicación al contenedor
+COPY my-restservice.jar /app/my-restservice.jar
+
+# Establece el directorio de trabajo
+WORKDIR /app
 
 # Exponer el puerto del contenedor (si es necesario)
 EXPOSE 8080
 
-# Comando de inicio del servidor WildFly
-CMD ["standalone.sh", "-b", "0.0.0.0"]
+# Comando de inicio del servicio
+CMD ["java", "-jar", "my-restservice.jar"]
