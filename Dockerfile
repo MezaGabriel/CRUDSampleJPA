@@ -1,4 +1,4 @@
-FROM ubuntu:23.10
+FROM oraclelinux:8
 
 # Instala OpenJDK 17
 RUN apt-get update && apt-get install -y openjdk-17-jdk
